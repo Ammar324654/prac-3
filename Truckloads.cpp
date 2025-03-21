@@ -1,19 +1,34 @@
-#include "Truckloads.h"
+#include <iostream>
 
-// RecursiveTruckLoad method for calculating trucks
-int RecursiveTruckLoad::calculateTrucks(int numCrates, int loadSize) {
-    if (numCrates <= loadSize) {
-        return 1; // Base case: one truck needed
+class Truckloads {
+public:
+    int numTrucks(int numCrates, int loadSize) {
+        // Base case: If the number of crates is less than or equal to the load size, one truck is needed
+        if (numCrates <= loadSize) {
+            return 1;
+        }
+        
+        // Recursive case: Divide crates in half and calculate trucks needed for each half
+        int halfCrates = numCrates / 2;
+        int trucks = 0;
+        
+        // For each half, calculate trucks and divide further if necessary
+        while (halfCrates > 0) {
+            trucks += numTrucks(halfCrates, loadSize);  // Call recursively for the divided pile
+            halfCrates = halfCrates / 2;  // Keep dividing further
+        }
+        
+        return trucks;
     }
+};
 
-    int halfCrates = numCrates / 2;
-    return calculateTrucks(halfCrates, loadSize) + calculateTrucks(numCrates - halfCrates, loadSize); // Divide and conquer
+int main() {
+    Truckloads t;
+    
+    int numCrates = 14;
+    int loadSize = 3;
+    std::cout << "Number of trucks required: " << t.numTrucks(numCrates, loadSize) << std::endl;
+    
+    return 0;
 }
 
-// Truckloads constructor
-Truckloads::Truckloads(std::shared_ptr<TruckLoadStrategy> strat) : strategy(strat) {}
-
-// Method to calculate the number of trucks
-int Truckloads::numTrucks(int numCrates, int loadSize) {
-    return strategy->calculateTrucks(numCrates, loadSize);
-}
