@@ -1,35 +1,38 @@
 #include "Reverser.h"
+#include <iostream>
 
-// ReverseDigit method for calculating reversed number
-int ReverseDigit::reverse(int value) {
-    if (value < 0) {
-        return -1; // Handle invalid input (negative number)
-    }
-    return reverseDigitHelper(value, 0);
-}
+using namespace std;
 
-// Helper method for ReverseDigit
-int ReverseDigit::reverseDigitHelper(int value, int reversed) {
+Reverser::Reverser() {}
+
+Reverser::~Reverser() {}
+
+int Reverser::reverseDigit(int value, int acc) {
     if (value == 0) {
-        return reversed;
+        return acc;
+    } 
+    if (value < 0) {
+        return -1;
     }
-    return reverseDigitHelper(value / 10, reversed * 10 + value % 10);
+    acc = acc * 10 + value % 10;
+    return reverseDigit(value / 10, acc);
 }
 
-// ReverseString method for reversing a string
-std::string ReverseString::reverse(std::string characters) {
+int Reverser::reverseDigit(int value) {
+    return reverseDigit(value, 0);
+}
+
+string Reverser::reverseString(string characters, string acc) {
     if (characters.empty()) {
-        return "ERROR"; // Handle empty string case
+        return acc;
     }
-    return reverseStringHelper(characters, 0);
+    if (characters.empty() && acc.empty()) {
+        return "ERROR";
+    }
+    acc = characters[0] + acc;
+    return reverseString(characters.substr(1), acc);
 }
 
-// Helper method for ReverseString
-std::string ReverseString::reverseStringHelper(std::string characters, int index) {
-    if (index == characters.length()) {
-        return "";
-    }
-    return reverseStringHelper(characters, index + 1) + characters[index];
+string Reverser::reverseString(string characters) {
+    return reverseString(characters, "");
 }
-
-
