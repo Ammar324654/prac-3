@@ -32,19 +32,4 @@ std::string ReverseString::reverseStringHelper(std::string characters, int index
     return reverseStringHelper(characters, index + 1) + characters[index];
 }
 
-// Template method for Reverser class
-template <typename T>
-T Reverser::reverseInput(T input) {
-    if constexpr (std::is_integral<T>::value) {
-        ReverseDigit reverseDigitStrategy;
-        return reverseDigitStrategy.reverse(input);
-    } else if constexpr (std::is_same<T, std::string>::value) {
-        ReverseString reverseStringStrategy;
-        return reverseStringStrategy.reverse(input);
-    }
-    throw std::invalid_argument("Unsupported type for reversal");
-}
 
-// Explicit instantiations for the types we plan to use
-template int Reverser::reverseInput<int>(int input);
-template std::string Reverser::reverseInput<std::string>(std::string input);
