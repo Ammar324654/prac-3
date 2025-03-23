@@ -1,7 +1,6 @@
 #ifndef REVERSER_H
 #define REVERSER_H
 
-
 #include <iostream>
 #include <string>
 
@@ -18,10 +17,5 @@ public:
     string reverseString(string characters, string acc);
     string reverseString(string characters);
 };
-
-
-
-
-
 
 #endif  // REVERSER_H
